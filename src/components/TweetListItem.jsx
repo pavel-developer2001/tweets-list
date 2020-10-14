@@ -1,7 +1,7 @@
 import React from 'react'
 import '../index.css'
 
-const TweetListItem = () => {
+const TweetListItem = ({items}) => {
     const [turn, setTurn] = React.useState(false)
     // window.addEventListener('click', () => {setTurn(false)}) 
     // console.log(turn)
@@ -26,8 +26,7 @@ const TweetListItem = () => {
                 <path fillRule="evenodd" clipRule="evenodd" d="M39.3897 14.8897L42.277 17.777L24.5 35.554L6.72302 17.777L9.61037 14.8897L24.5 29.7793L39.3897 14.8897Z" fill="#21414B" />
             </svg>
 
-            <p className="tweet__list-item-text">Минчане передают, что на Немиге, около ТРЦ Galleria силовики применили водомет
- для разгона протестующих</p>
+            <p className="tweet__list-item-text">{items}</p>
 
             <div className="tweet__list-item-like">
                 <svg className="tweet__list-item-like-icon" width="30" height="30" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
