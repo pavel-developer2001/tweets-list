@@ -1,13 +1,13 @@
-.App{
-    background-color: #1E4D53;
-    text-align: center;
-    margin: 0 auto;
-    width: 70%;
-    margin-top: 40px;
-    padding-bottom: 1px;
-    border-radius: 5px;
+.App {
+  background-color: #1e4d53;
+  text-align: center;
+  margin: 0 auto;
+  width: 70%;
+  margin-top: 40px;
+  padding-bottom: 1px;
+  border-radius: 5px;
 }
-.dark{
-    background-color: #222930;
-    height: 25px;
+.dark {
+  background-color: #222930;
+  height: 25px;
 }
