@@ -1,12 +1,19 @@
 import React from 'react'
 import '../index.css'
 import {useSelector, useDispatch} from 'react-redux'
-import {removeCard} from '../redux/actions/addCard'
+import {removeCard, emitCard} from '../redux/actions/addCard'
 
 const TweetListItem = ({text, likes, id}) => {
     const [turn, setTurn] = React.useState(false)
+    const [emit, setEmit] = React.useState(false)
+    const [value, setValue] = React.useState(text)
+
     const items = useSelector((item) => item)
     const dispatch = useDispatch()
+
+    const findItem = items.find((todo) => todo.id === id)
+
+
     //функция закрытия окна настроек
     const sortRef = React.useRef()
     const handleOutsideClick = (event) => {
@@ -30,6 +37,23 @@ const TweetListItem = ({text, likes, id}) => {
             dispatch(removeCard(cards))
           }
      }
+
+     const emitElement = (e) => {
+        e.preventDefault()
+        const newEditItem = {
+            id: findItem.id,
+            text: value,
+            likes 
+        }
+        const findItemArray = items.findIndex((item) => item.id === newEditItem.id);
+        const cards = [
+            ...items.slice(0, findItemArray),
+            ...items.slice(findItemArray  + 1)
+          ]
+        const edit = [...cards, newEditItem]  
+        dispatch(emitCard(edit))
+        setEmit(!emit)
+     }
     return (
         <div className="tweet__list-item">
             {turn && <div ref={sortRef} className="tweet__list-item-installation">
@@ -37,7 +61,7 @@ const TweetListItem = ({text, likes, id}) => {
                     <svg width="25" height="25" viewBox="0 0 34 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" clipRule="evenodd" d="M27.2199 26.5294L30.6381 23.5731L29.4342 19.7907L29.9587 18.7073L33.9167 16.7758V12.5953L29.9699 10.6556L29.4542 9.57423L30.6732 5.7898L27.2527 2.83578L22.8788 3.87664L21.629 3.42343L19.3954 0H14.5617L12.319 3.41339L11.0689 3.85928L6.69389 2.80374L3.27867 5.75745L4.48236 9.5409L3.95835 10.6218L0 12.5535V16.7328L3.94318 18.6768L4.4593 19.7591L3.24053 23.5429L6.65705 26.4977L11.0317 25.4567L12.2816 25.91L14.5152 29.332H19.3477L21.5937 25.9216L22.8449 25.4753L27.2199 26.5294ZM27.5228 16.8341L26.1788 19.6103L27.1891 22.7847L26.3129 23.5426L22.6502 22.6602L19.4388 23.8057L17.5555 26.6653H16.3153L14.4476 23.8038L11.2411 22.6411L7.56876 23.515L6.69396 22.7584L7.71427 19.5907L6.38993 16.8135L3.08333 15.1834V14.1107L6.39345 12.4953L7.73793 9.72207L6.72745 6.54595L7.60043 5.79094L11.263 6.6746L14.4755 5.52874L16.356 2.66667H17.5949L19.4627 5.52947L22.6693 6.69226L26.3424 5.81816L27.2194 6.57555L26.1993 9.74261L27.5241 12.5207L30.8333 14.1471V15.2186L27.5228 16.8341ZM16.9583 20C13.5526 20 10.7917 17.6122 10.7917 14.6667C10.7917 11.7211 13.5526 9.33333 16.9583 9.33333C20.3641 9.33333 23.125 11.7211 23.125 14.6667C23.125 17.6122 20.3641 20 16.9583 20ZM20.0417 14.6667C20.0417 16.1394 18.6612 17.3333 16.9583 17.3333C15.2555 17.3333 13.875 16.1394 13.875 14.6667C13.875 13.1939 15.2555 12 16.9583 12C18.6612 12 20.0417 13.1939 20.0417 14.6667Z" fill="#21414B" />
                 </svg>
-                    <p className="tweet__list-item-installation-text">Редактировать</p></div>
+                    <p onClick={() => setEmit(!emit)} className="tweet__list-item-installation-text">Редактировать</p></div>
                 <div className="tweet__list-item-installation-item">
                     <svg width="25" height="25" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" clipRule="evenodd" d="M10.7917 0H20.0417C21.7445 0 23.125 1.19391 23.125 2.66667V4H27.75C29.4529 4 30.8333 5.19391 30.8333 6.66667V9.33333C30.8333 10.8061 29.4529 12 27.75 12H27.6265L26.2083 26.6667C26.2083 28.1394 24.8279 29.3333 23.125 29.3333H7.70834C6.00546 29.3333 4.625 28.1394 4.63033 26.7774L3.20647 12H3.08333C1.38046 12 0 10.8061 0 9.33333V6.66667C0 5.19391 1.38046 4 3.08333 4H7.70833V2.66667C7.70833 1.19391 9.08879 0 10.7917 0ZM3.08333 6.66667L7.70833 6.66667H23.125L27.75 6.66667V9.33333H3.08333V6.66667ZM6.3 12H24.5328L23.1303 26.5559L23.125 26.6667H7.70833L6.3 12ZM20.0417 2.66667V4H10.7917V2.66667H20.0417Z" fill="#21414B" />
@@ -51,7 +75,11 @@ const TweetListItem = ({text, likes, id}) => {
                 <path fillRule="evenodd" clipRule="evenodd" d="M39.3897 14.8897L42.277 17.777L24.5 35.554L6.72302 17.777L9.61037 14.8897L24.5 29.7793L39.3897 14.8897Z" fill="#21414B" />
              </svg>
 
-            <p className="tweet__list-item-text">{text}</p>
+            {!emit &&<p className="tweet__list-item-text">{text}</p>}
+            {emit && <form className="add__tweet-form" >
+            <textarea className="add__tweet-form-area" value={value} onChange={e => setValue(e.target.value)} >{text}</textarea>
+            <button type="submit" className="add__tweet-form-btn" onClick={emitElement}>Добавить</button>
+        </form>}
 
             <div className="tweet__list-item-like">
                 <svg className="tweet__list-item-like-icon" width="30" height="30" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -9,7 +9,9 @@ const addReducer = ( state=initialState, action) => {
         case "ADD_CARD":
                 return [...state, action.payload]
         case "REMOVE_ITEM":
-            return action.payload        
+            return action.payload  
+        case "EMIT_ITEM":
+            return action.payload             
         default:
             return state
     }
