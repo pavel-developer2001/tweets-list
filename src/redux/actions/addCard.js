@@ -1,5 +1,9 @@
-const addCard = (text) => ({
+export const addCard = (payload) => ({
     type: "ADD_CARD",
-    payload: text
+    payload
 })
-export default addCard
+
+export const removeCard = (removeItem) => ({
+    type:"REMOVE_ITEM",
+    payload: removeItem
+})

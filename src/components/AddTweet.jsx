@@ -1,15 +1,20 @@
 import React from 'react'
 import '../index.css'
-import {useDispatch} from 'react-redux'
-import addCard from '../redux/actions/addCard'
+import {useDispatch, useSelector} from 'react-redux'
+import {addCard} from '../redux/actions/addCard'
 
 const AddTweet = () => {
     const dispatch = useDispatch()
     const [value, setValue] = React.useState('')
-   
+    const items = useSelector((item) => item)
     const addTweet = (e) => {
         e.preventDefault()
-        dispatch(addCard(value))
+        const newItem = {
+            id: items.length + 1,
+            text: value,
+            likes: 0
+        }
+        dispatch(addCard(newItem))
         setValue('')
     }
     // 
